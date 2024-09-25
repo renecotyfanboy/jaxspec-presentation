@@ -7,7 +7,7 @@
 <link href="jaxspec_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="jaxspec_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="jaxspec_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="jaxspec_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="jaxspec_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.56">
 
   <title>jaxspec</title>
@@ -28,6 +28,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
   </style>
   <link rel="stylesheet" href="jaxspec_files/libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="style.css">
@@ -323,58 +388,28 @@
     }
   </style>
 </head>
-<body class="quarto-light">
+<body class="quarto-dark">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title"><code>jaxspec</code></h1>
-  <p class="subtitle">A fast, simple and reliable package for X-ray spectral fitting</p>
+  <p class="subtitle">A fast and robust Python library for X-ray spectral fitting</p>
 
 <div class="quarto-title-authors">
 </div>
 
 </section>
 <section>
-<section id="what-is-jaxspec" class="title-slide slide level1 center">
-<h1>What is <code>jaxspec</code>?</h1>
+<section id="x-ray-spectral-fitting-crash-course" class="title-slide slide level1 center">
+<h1>X-ray spectral fitting crash course</h1>
 
 </section>
-<section id="what-is-jaxspec-1" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">What is <code>jaxspec</code> ?</h2>
-<p>This is <code>xspec</code>, <code>spex</code>, or <code>isis</code>, but in pure Python.</p>
-<p>With <code>jaxspec</code> you can :</p>
-<ul>
-<li>load your favorite X-ray data like in <code>xspec</code></li>
-<li>define a spectral model using components</li>
-<li>use state-of-the-art Bayesian methodologies</li>
-</ul>
-<p>with easy installation and interface to other frameworks.</p>
-<div class="footer">
-<p>Check the <a href="https://github.com/renecotyfanboy/jaxspec">repository</a></p>
-</div>
-</section>
-<section id="shoulders-of-giants-etc." class="slide level2">
-<h2>Shoulders of giants etc.</h2>
-<p>We are built on top of <code>JAX</code></p>
-<ul>
-<li>Just-in-time compilable</li>
-<li>Transparent on accelerators</li>
-<li>Auto-differentiable</li>
-</ul>
-<p><img data-src="jax.png" class="absolute" style="top: 150px; right: 50px; width: 450px; height: 250px; "></p>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p><code>JAX</code> is widely use by Google and DeepMind, and grows in the machine learning community. <em>AlphaFold</em>, <em>Gemini</em> or <em>midjourney</em> are built on top of it.</p>
-</div>
-</div>
+<section id="section" class="slide level2">
+<h2></h2>
+
+<img data-src="images/spectral_fitting.png" class="quarto-figure quarto-figure-center r-stretch" style="width:30.0%"><div class="caption">
+<p>See <a href="https://arxiv.org/pdf/2309.05705">Buchner &amp; Boorman (2023)</a></p>
 </div>
 </section></section>
 <section>
@@ -393,38 +428,192 @@
 <p><strong>Goal of parametric inference</strong></p>
 </div>
 <div class="callout-content">
-<p>Find the best distribution of the parameters <span class="math inline">\(\theta\)</span> to describe the observed data <span class="math inline">\(X\)</span></p>
+<p>Find the best parameters <span class="math inline">\(\theta\)</span> to describe the data <span class="math inline">\(X\)</span></p>
 </div>
 </div>
 </div>
+<div class="fragment">
+<p>Let’s do it the Bayesian way:</p>
 <p><span class="math display">\[
-\color{red}{P(\theta | X)} = \frac{\color{blue}{P(X | \theta)} \color{green}{P(\theta)}}{P(X)}
+P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 \]</span></p>
-<ul>
-<li><span class="math inline">\(\color{green}{P(\theta)}\)</span> is the prior distribution</li>
-<li><span class="math inline">\(\color{blue}{P(X | \theta)}\)</span> is the likelihood</li>
-<li><span class="math inline">\(\color{red}{P(\theta | X)}\)</span> is the posterior distribution</li>
-</ul>
+</div>
+<div class="fragment">
+<p>We want to compute the posterior distribution <span class="math inline">\(P(\theta | X)\)</span></p>
+</div>
 </section>
-<section id="solving-a-bayesian-inference-problem" class="slide level2">
-<h2>Solving a Bayesian inference problem</h2>
-<p>In general, <span class="math inline">\(p(\theta | X)\)</span> not computable because it requires the computation of <strong>high dimension integrals</strong>.</p>
+<section id="posterior-distribution" class="slide level2 smaller">
+<h2>Posterior distribution</h2>
+<div class="column" style="width:65%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/corner_mcmc.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+</div><div class="column fragment" style="width:35%;">
+<div>
 <ul>
-<li><em>Solution 1</em> : Sample <span class="math inline">\(\{\theta\}_i\)</span> from the posterior distribution
+<li class="fragment">High dimensional probability density function</li>
+<li class="fragment">Visualisation with 2D slices for each parameters</li>
+<li class="fragment">Correlation between parameters</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Why is it hard to compute ?</p>
+<p>How to compute this ?</p>
+</div>
+</div></section>
+<section id="methods-for-bayesian-inference" class="slide level2 smaller">
+<h2>Methods for Bayesian inference</h2>
+<p>In general, <span class="math inline">\(P(\theta | X)\)</span> not computable because of <strong>high dimension integrals</strong>.</p>
+<div class="column fragment" style="width:50%;">
+<p><strong>Sample <span class="math inline">\(\{\theta\}_i\)</span> from the posterior distribution</strong></p>
 <ul>
 <li>Markov Chain Monte Carlo (MCMC)</li>
 <li>Nested sampling (NS)</li>
-</ul></li>
-<li><em>Solution 2</em> : Find a surrogate distribution <span class="math inline">\(q(\theta) \simeq p(\theta | X)\)</span>
+</ul>
+<p><img data-src="images/hmc.gif" style="width:90.0%" height="250"></p>
+</div><div class="column fragment" style="width:50%;">
+<p><strong>Find a surrogate distribution <span class="math inline">\(q(\theta) \simeq p(\theta | X)\)</span></strong></p>
 <ul>
 <li>Variational Inference (VI)</li>
 <li>Simulation-based Inference (SBI)</li>
-</ul></li>
 </ul>
+<p><img data-src="images/vi.gif" style="width:90.0%" height="250"></p>
+</div></section>
+<section id="convergence-speed-for-mcmc" class="slide level2">
+<h2>Convergence speed for MCMC</h2>
+<p>Vanilla MCMC algorithms have low mixing.</p>
+
+<img data-src="images/xspec_mcmc.gif" style="width:100.0%" class="r-stretch"><p><a href="https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&amp;target=banana" data-preview-link="true" style="text-align: center">See demos</a></p>
 </section>
-<section id="maybe-some-animation-about-mcmc-vi" class="slide level2">
-<h2>Maybe some animation about MCMC &amp; VI</h2>
-<p>Yeah I should definitly do some stuff on this topic</p>
+<section id="differentiable-likelihood" class="slide level2">
+<h2>Differentiable likelihood</h2>
+<p>No U-Turn Sampler (NUTS) is much more efficient</p>
+
+<img data-src="images/jaxspec_mcmc.gif" style="width:100.0%" class="r-stretch"></section></section>
+<section>
+<section id="what-is-jaxspec" class="title-slide slide level1 center">
+<h1>What is <code>jaxspec</code>?</h1>
+
+</section>
+<section id="what-is-jaxspec-1" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">What is <code>jaxspec</code> ?</h2>
+<p>This is <code>xspec</code> or equivalent, but in pure Python.</p>
+<p>With <code>jaxspec</code> you can :</p>
+<div>
+<ul>
+<li class="fragment">load your favorite X-ray data like in <code>xspec</code></li>
+<li class="fragment">define a spectral model using components</li>
+<li class="fragment">use state-of-the-art Bayesian methodologies</li>
+</ul>
+</div>
+<div class="fragment">
+<p>See <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240905757D/abstract">Dupourqué, Barret, Diez, Guillot &amp; Quintin (2024)</a></p>
+</div>
+<div class="footer">
+<p>Check the <a href="https://github.com/renecotyfanboy/jaxspec">repository</a></p>
+</div>
+</section>
+<section id="built-on-top-of-jax" class="slide level2">
+<h2>Built on top of <code>JAX</code></h2>
+<p>A pure-Python machine learning library</p>
+<div>
+<ul>
+<li class="fragment">Just-in-time compilable</li>
+<li class="fragment">Transparent on accelerators</li>
+<li class="fragment">Auto-differentiable</li>
+</ul>
+</div>
+<p><img data-src="jax.png" class="absolute" style="top: 150px; right: 10px; width: 450px; height: 250px; "></p>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p><code>JAX</code> is widely use by Google and DeepMind, and grows in the machine learning community. <em>AlphaFold</em>, <em>Gemini</em> or <em>midjourney</em> are built on top of it.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="performance-benchmark" class="slide level2 smaller">
+<h2>Performance benchmark</h2>
+<div class="column" style="width:35%;">
+<div class="fragment" data-fragment-index="1">
+<ul>
+<li>Absorbed blackbody and powerlaw model</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="2">
+<ul>
+<li>5-parameters to fit</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="3">
+<ul>
+<li>EPIC-PN spectrum of NGC7793 ULX-4</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="5">
+<p><code>jaxspec</code> with NUTS is an order of magnitude faster on CPU</p>
+</div>
+</div><div class="column fragment" data-fragment-index="4" style="width:65%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/time_benchmark.png" class="quarto-figure quarto-figure-center" style="width:65.0%"></p>
+</figure>
+</div>
+</div><p>:::</p>
+</section></section>
+<section>
+<section id="how-to-use-jaxspec" class="title-slide slide level1 center">
+<h1>How to use <code>jaxspec</code></h1>
+
+</section>
+<section id="always-run-this" class="slide level2">
+<h2>Always run this</h2>
+<p><code>JAX</code> can be unpythonic at time.</p>
+<p>Some header lines must be run.</p>
+<div class="sourceCode" id="cb1" data-echo="true" data-code-line-numbers="|3|4|5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpyro</span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a>numpyro.enable_x64()</span>
+<span id="cb1-4"><a href=""></a>numpyro.set_host_device_count(<span class="dv">4</span>)</span>
+<span id="cb1-5"><a href=""></a>numpyro.set_platform(<span class="st">"cpu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="loading-data" class="slide level2">
+<h2>Loading data</h2>
+<p>We work on supporting existing convention, the OGIP standard, i.e.&nbsp;file such as <code>.pha</code>, <code>.arf</code> and <code>.rmf</code></p>
+<div id="6f7e2b93" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> jaxspec.data <span class="im">import</span> ObsConfiguration</span>
+<span id="cb2-2"><a href=""></a></span>
+<span id="cb2-3"><a href=""></a>obs <span class="op">=</span> ObsConfiguration.from_pha_file(</span>
+<span id="cb2-4"><a href=""></a>  <span class="st">"path/to/data.pha"</span>,</span>
+<span id="cb2-5"><a href=""></a>  low_energy<span class="op">=</span><span class="fl">0.5</span>, high_energy<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb2-6"><a href=""></a>  rmf_path <span class="op">=</span><span class="st">"path/to/data.rmf"</span>,</span>
+<span id="cb2-7"><a href=""></a>  arf_path <span class="op">=</span><span class="st">"path/to/data.arf"</span>,</span>
+<span id="cb2-8"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="test-autre" class="slide level2">
+<h2>Test autre</h2>
+<div id="b1235ecc" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href=""></a></span>
+<span id="cb3-4"><a href=""></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.01</span>)</span>
+<span id="cb3-5"><a href=""></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
+<span id="cb3-6"><a href=""></a>fig, ax <span class="op">=</span> plt.subplots(subplot_kw<span class="op">=</span>{<span class="st">"projection"</span>: <span class="st">"polar"</span>})</span>
+<span id="cb3-7"><a href=""></a>ax.plot(theta, r)</span>
+<span id="cb3-8"><a href=""></a>ax.set_rticks([<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>])</span>
+<span id="cb3-9"><a href=""></a>ax.grid(<span class="va">True</span>)</span>
+<span id="cb3-10"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section></section>
 <section>
 <section id="additional-material" class="title-slide slide level1 center">
@@ -602,7 +791,7 @@
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'slide',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',

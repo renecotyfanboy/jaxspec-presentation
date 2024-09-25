@@ -1277,3 +1277,18 @@ table {
   margin-bottom: 12px; /* Add some space below the input */
 }
 
+.rounded-image {
+  border: 2px solid #000;          /* Customize border style and color */
+  border-radius: 15px;             /* Adjust the radius for roundness */
+  overflow: hidden;                /* Ensure content fits within rounded corners */
+  display: inline-block;           /* Keep the image inline for proper layout */
+}
+.rounded-image img {
+  display: block;                  /* Remove default inline spacing */
+  width: 100%;                     /* Make image fill its container */
+  height: auto;                    /* Maintain aspect ratio */
+}
+
+.caption{
+  text-align: center;
+}
