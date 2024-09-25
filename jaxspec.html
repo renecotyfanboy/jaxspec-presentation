@@ -474,24 +474,39 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 </ul>
 <p><img data-src="images/hmc.gif" style="width:90.0%" height="250"></p>
 </div><div class="column fragment" style="width:50%;">
-<p><strong>Find a surrogate distribution <span class="math inline">\(q(\theta) \simeq p(\theta | X)\)</span></strong></p>
+<p><strong>Find a surrogate distribution <span class="math inline">\(q(\theta) \simeq P(\theta | X)\)</span></strong></p>
 <ul>
 <li>Variational Inference (VI)</li>
 <li>Simulation-based Inference (SBI)</li>
 </ul>
 <p><img data-src="images/vi.gif" style="width:90.0%" height="250"></p>
 </div></section>
-<section id="convergence-speed-for-mcmc" class="slide level2">
+<section id="convergence-speed-for-mcmc" class="slide level2 smaller">
 <h2>Convergence speed for MCMC</h2>
 <p>Vanilla MCMC algorithms have low mixing.</p>
 
-<img data-src="images/xspec_mcmc.gif" style="width:100.0%" class="r-stretch"><p><a href="https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&amp;target=banana" data-preview-link="true" style="text-align: center">See demos</a></p>
+<img data-src="images/xspec_mcmc.gif" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><div style="text-align: center; margin-top: 1em">
+<p><a href="https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&amp;target=banana" style="text-align: center">Differential Evolution MCMC demo</a></p>
+</div>
 </section>
-<section id="differentiable-likelihood" class="slide level2">
+<section id="differentiable-likelihood" class="slide level2 smaller">
 <h2>Differentiable likelihood</h2>
 <p>No U-Turn Sampler (NUTS) is much more efficient</p>
 
-<img data-src="images/jaxspec_mcmc.gif" style="width:100.0%" class="r-stretch"></section></section>
+<img data-src="images/jaxspec_mcmc.gif" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><div style="text-align: center; margin-top: 1em">
+<p><a href="https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNuts&amp;target=banana" style="text-align: center">Efficient NUTS demo</a></p>
+</div>
+</section>
+<section id="auto--differentiability-brings-new-tools-and-paradigms" class="slide level2 center">
+<h2>(Auto-) Differentiability brings new tools and paradigms</h2>
+<div class="r-fit-text">
+<ul>
+<li class="fragment">Hamiltonian Monte Carlo algorithms</li>
+<li class="fragment">Variational Inference approaches</li>
+<li class="fragment">Fancy Machine Learning stuff</li>
+</ul>
+</div>
+</section></section>
 <section>
 <section id="what-is-jaxspec" class="title-slide slide level1 center">
 <h1>What is <code>jaxspec</code>?</h1>
@@ -506,6 +521,7 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 <li class="fragment">load your favorite X-ray data like in <code>xspec</code></li>
 <li class="fragment">define a spectral model using components</li>
 <li class="fragment">use state-of-the-art Bayesian methodologies</li>
+<li class="fragment">with <strong>differentiable likelihoods</strong></li>
 </ul>
 </div>
 <div class="fragment">
@@ -544,7 +560,7 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 </section>
 <section id="performance-benchmark" class="slide level2 smaller">
 <h2>Performance benchmark</h2>
-<div class="column" style="width:35%;">
+<div class="column" style="width:60%;">
 <div class="fragment" data-fragment-index="1">
 <ul>
 <li>Absorbed blackbody and powerlaw model</li>
@@ -557,20 +573,19 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 </div>
 <div class="fragment" data-fragment-index="3">
 <ul>
-<li>EPIC-PN spectrum of NGC7793 ULX-4</li>
+<li>EPIC pn spectrum of NGC7793 ULX-4</li>
 </ul>
 </div>
 <div class="fragment" data-fragment-index="5">
-<p><code>jaxspec</code> with NUTS is an order of magnitude faster on CPU</p>
+<p><code>jaxspec</code> with NUTS is an order of magnitude faster on CPU compared to others</p>
 </div>
-</div><div class="column fragment" data-fragment-index="4" style="width:65%;">
-<div class="quarto-figure quarto-figure-center">
+</div><div class="column fragment" data-fragment-index="4" style="width:40%;">
+<div class="quarto-figure quarto-figure-left">
 <figure>
-<p><img data-src="images/time_benchmark.png" class="quarto-figure quarto-figure-center" style="width:65.0%"></p>
+<p><img data-src="images/time_benchmark.png" class="quarto-figure quarto-figure-left" style="width:100.0%"></p>
 </figure>
 </div>
-</div><p>:::</p>
-</section></section>
+</div></section></section>
 <section>
 <section id="how-to-use-jaxspec" class="title-slide slide level1 center">
 <h1>How to use <code>jaxspec</code></h1>
@@ -589,7 +604,7 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 <section id="loading-data" class="slide level2">
 <h2>Loading data</h2>
 <p>We work on supporting existing convention, the OGIP standard, i.e.&nbsp;file such as <code>.pha</code>, <code>.arf</code> and <code>.rmf</code></p>
-<div id="6f7e2b93" class="cell" data-execution_count="2">
+<div id="5c0b83eb" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> jaxspec.data <span class="im">import</span> ObsConfiguration</span>
 <span id="cb2-2"><a href=""></a></span>
 <span id="cb2-3"><a href=""></a>obs <span class="op">=</span> ObsConfiguration.from_pha_file(</span>
@@ -598,21 +613,6 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 <span id="cb2-6"><a href=""></a>  rmf_path <span class="op">=</span><span class="st">"path/to/data.rmf"</span>,</span>
 <span id="cb2-7"><a href=""></a>  arf_path <span class="op">=</span><span class="st">"path/to/data.arf"</span>,</span>
 <span id="cb2-8"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="test-autre" class="slide level2">
-<h2>Test autre</h2>
-<div id="b1235ecc" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-2"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-3"><a href=""></a></span>
-<span id="cb3-4"><a href=""></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.01</span>)</span>
-<span id="cb3-5"><a href=""></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
-<span id="cb3-6"><a href=""></a>fig, ax <span class="op">=</span> plt.subplots(subplot_kw<span class="op">=</span>{<span class="st">"projection"</span>: <span class="st">"polar"</span>})</span>
-<span id="cb3-7"><a href=""></a>ax.plot(theta, r)</span>
-<span id="cb3-8"><a href=""></a>ax.set_rticks([<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>])</span>
-<span id="cb3-9"><a href=""></a>ax.grid(<span class="va">True</span>)</span>
-<span id="cb3-10"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
