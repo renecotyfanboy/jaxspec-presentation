@@ -1,1 +1,4 @@
 /.quarto/
+/jaxspec_files
+/.jupyter_cache
+.DS*
