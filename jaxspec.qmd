@@ -1,0 +1,232 @@
+---
+title: "`jaxspec`"
+subtitle: "A fast and robust Python library for X-ray spectral fitting "
+format:
+  revealjs: 
+    transition: slide
+    slide-number: true
+    chalkboard: 
+      buttons: false
+    preview-links: auto
+    logo: images/logo_small.png
+    css: style.css
+    theme: night
+---
+
+# X-ray spectral fitting crash course
+
+## 
+
+![](images/spectral_fitting.png){width=30% fig-align="center"}
+
+::: {.caption}
+See [Buchner & Boorman (2023)](https://arxiv.org/pdf/2309.05705)
+:::
+
+# Bayesian inference crash course
+
+## Reminder of Bayesian inference {auto-animate="true"}
+
+::: {.callout-tip}
+
+## Goal of parametric inference {.smaller}
+
+Find the best parameters $\theta$ to describe the data $X$
+:::
+
+::: {.fragment}
+Let's do it the Bayesian way:
+
+$$
+P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
+$$
+:::
+
+::: {.fragment}
+We want to compute the posterior distribution $P(\theta | X)$
+:::
+
+## Posterior distribution {.smaller}
+
+::: {.column width="65%"}
+![](images/corner_mcmc.png){width=70% fig-align="center"}
+:::
+
+::: {.column width="35%" .fragment}
+
+:::{.incremental}
+- High dimensional probability density function
+- Visualisation with 2D slices for each parameters
+- Correlation between parameters 
+:::
+
+::: {.fragment}
+Why is it hard to compute ?
+
+How to compute this ?
+:::
+:::
+
+
+## Methods for Bayesian inference {.smaller}
+
+In general, $P(\theta | X)$ not computable because of **high dimension integrals**.
+
+::: {.column width="50%" .fragment}
+**Sample $\{\theta\}_i$ from the posterior distribution**
+
+- Markov Chain Monte Carlo (MCMC)
+- Nested sampling (NS)
+
+![](images/hmc.gif){width=90% height="250px"}
+
+:::
+
+::: {.column width="50%" .fragment}
+**Find a surrogate distribution $q(\theta) \simeq P(\theta | X)$**
+
+- Variational Inference (VI)
+- Simulation-based Inference (SBI)
+
+![](images/vi.gif){width=90% height="250px"}
+
+:::
+
+## Convergence speed for MCMC {.smaller}
+
+Vanilla MCMC algorithms have low mixing.
+
+![](images/xspec_mcmc.gif){width=100% fig-align="center"}
+
+::: {style="text-align: center; margin-top: 1em"}
+[Differential Evolution MCMC demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&target=banana){style="text-align: center"}
+:::
+
+## Differentiable likelihood {.smaller}
+
+No U-Turn Sampler (NUTS) is much more efficient
+
+![](images/jaxspec_mcmc.gif){width=100% fig-align="center"}
+
+::: {style="text-align: center; margin-top: 1em"}
+[Efficient NUTS demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNuts&target=banana){style="text-align: center"}
+:::
+
+## (Auto-) Differentiability brings new tools and paradigms {.center}
+
+::: {.incremental .r-fit-text}
+- Hamiltonian Monte Carlo algorithms
+- Variational Inference approaches
+- Fancy Machine Learning stuff
+:::
+
+# What is `jaxspec`?
+
+## What is `jaxspec` ? {auto-animate="true"}
+
+This is `xspec` or equivalent, but in pure Python. 
+
+With `jaxspec` you can :
+
+::: {.incremental}
+- load your favorite X-ray data like in `xspec`
+- define a spectral model using components
+- use state-of-the-art Bayesian methodologies
+- with **differentiable likelihoods**
+:::
+
+::: {.fragment}
+See [Dupourqué, Barret, Diez, Guillot & Quintin (2024)](https://ui.adsabs.harvard.edu/abs/2024arXiv240905757D/abstract)
+:::
+
+::: footer
+Check the [repository](https://github.com/renecotyfanboy/jaxspec)
+:::
+
+## Built on top of  `JAX` 
+
+A pure-Python machine learning library
+
+::: {.incremental}
+- Just-in-time compilable
+- Transparent on accelerators
+- Auto-differentiable
+:::
+
+![](jax.png){.absolute top=150 right=10 width="450" height="250"}
+
+::: {.fragment .callout-note}
+`JAX` is widely use by Google and DeepMind, and grows in the machine learning community. *AlphaFold*, *Gemini* or *midjourney* are built on top of it.
+:::
+
+## Performance benchmark {.smaller}
+
+
+::: {.column width="60%"}
+
+::: {.fragment fragment-index=1}
+- Absorbed blackbody and powerlaw model
+:::
+
+::: {.fragment fragment-index=2}
+- 5-parameters to fit
+:::
+
+::: {.fragment fragment-index=3}
+- EPIC pn spectrum of NGC7793 ULX-4
+:::
+
+::: {.fragment fragment-index=5}
+`jaxspec` with NUTS is an order of magnitude faster on CPU compared to others
+:::
+
+:::
+
+::: {.column width="40%" .fragment fragment-index=4}
+![](images/time_benchmark.png){width=100% fig-align="left"}
+:::
+
+# How to use `jaxspec`
+
+## Always run this
+
+`JAX` can be unpythonic at time.
+
+Some header lines must be run.
+
+```{.python code-line-numbers="|3|4|5" echo="true"}
+import numpyro
+
+numpyro.enable_x64()
+numpyro.set_host_device_count(4)
+numpyro.set_platform("cpu")
+```
+
+## Loading data
+
+We work on supporting existing convention, the OGIP standard, i.e. file such as `.pha`, `.arf` and `.rmf` 
+
+```{python}
+#| echo: true
+
+from jaxspec.data import ObsConfiguration
+
+obs = ObsConfiguration.from_pha_file(
+  "path/to/data.pha",
+  low_energy=0.5, high_energy=10,
+  rmf_path ="path/to/data.rmf",
+  arf_path ="path/to/data.arf",
+)
+```
+
+
+# Additional material
+
+## Online documentation
+
+We host a documentation on ReadTheDocs
+
+::: {style="text-align: center; margin-top: 1em"}
+[Check the documentation](https://jaxspec.rtfd.io/){preview-link="true" style="text-align: center"}
+:::
+
