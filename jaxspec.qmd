@@ -23,6 +23,79 @@ format:
 See [Buchner & Boorman (2023)](https://arxiv.org/pdf/2309.05705)
 :::
 
+## X-ray astrophysical sources
+
+:::: {.columns .v-center-container}
+
+::: {.column width="33%"}
+::: {.fragment style="text-align:center;"}
+![Accreting black holes](images/bh_1.png){width=100% fig-align="center"}
+:::
+:::
+
+::: {.column width="33%"}
+::: {.fragment style="text-align:center;"}
+![Galaxy clusters](images/gc.png){width=100% fig-align="center"}
+:::
+:::
+
+::: {.column width="33%"}
+::: {.fragment style="text-align:center;"}
+![Compact objects](images/ns.jpg){width=100% fig-align="center"}
+:::
+:::
+
+::: footer
+Visuals were designed by [kurzgesagt](https://kurzgesagt.org/)
+:::
+
+::::
+
+## Measuring X-rays from the sky
+
+:::: {.columns .v-center-container}
+
+::: {.column width="33%"}
+::: {.fragment style="text-align:center;"}
+![](images/input_spectrum.png){width=100% fig-align="center"}
+
+Photon flux emitted by the source
+:::
+:::
+
+::: {.column width="33%"}
+::: {.fragment style="text-align:center;"}
+Response matrix 
+Effective area
+Poisson noise
+
+→
+
+![](images/redistribution.png){width=100% fig-align="center"}
+:::
+:::
+
+::: {.column width="33%"}
+::: {.fragment style="text-align:center;"}
+![](images/folded_spectrum.png){width=100% fig-align="center"}
+
+Number of counts in the detector
+:::
+:::
+
+::::
+## Forward modelling {.smaller}
+
+::: {.incremental}
+- The model spectrum is discretized on a finite size energy grid $$ F_j \simeq \int_{E_j}^{E_{j+1}} F(E, \theta) \text{d}E $$
+
+- The convolution with the instrument is reduced to a matrix multiplication $$ \lambda_i \simeq \sum_j R_{i,j} \, A_j \, F_j \, \Delta T$$
+
+- The counts in each channel follows a Poisson distribution $$ C_i \sim \mathcal{P}\left\{ \lambda_i \right\} $$
+
+
+:::
+
 # Bayesian inference crash course
 
 ## Reminder of Bayesian inference {auto-animate="true"}
