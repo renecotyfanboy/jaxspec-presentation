@@ -411,6 +411,84 @@
 <img data-src="images/spectral_fitting.png" class="quarto-figure quarto-figure-center r-stretch" style="width:30.0%"><div class="caption">
 <p>See <a href="https://arxiv.org/pdf/2309.05705">Buchner &amp; Boorman (2023)</a></p>
 </div>
+</section>
+<section id="x-ray-astrophysical-sources" class="slide level2">
+<h2>X-ray astrophysical sources</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:33%;">
+<div class="fragment" style="text-align:center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/bh_1.png" style="width:100.0%"></p>
+<figcaption>Accreting black holes</figcaption>
+</figure>
+</div>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="fragment" style="text-align:center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/gc.png" style="width:100.0%"></p>
+<figcaption>Galaxy clusters</figcaption>
+</figure>
+</div>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="fragment" style="text-align:center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/ns.jpg" style="width:100.0%"></p>
+<figcaption>Compact objects</figcaption>
+</figure>
+</div>
+</div>
+</div><div class="footer">
+<p>Visuals were designed by <a href="https://kurzgesagt.org/">kurzgesagt</a></p>
+</div>
+</div>
+</section>
+<section id="measuring-x-rays-from-the-sky" class="slide level2">
+<h2>Measuring X-rays from the sky</h2>
+<div class="columns v-center-container">
+<div class="column" style="width:33%;">
+<div class="fragment" style="text-align:center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/input_spectrum.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+<p>Photon flux emitted by the source</p>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="fragment" style="text-align:center;">
+<p>Response matrix Effective area Poisson noise</p>
+<p>→</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/redistribution.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="fragment" style="text-align:center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/folded_spectrum.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+<p>Number of counts in the detector</p>
+</div>
+</div></div>
+</section>
+<section id="forward-modelling" class="slide level2 smaller">
+<h2>Forward modelling</h2>
+<div>
+<ul>
+<li class="fragment"><p>The model spectrum is discretized on a finite size energy grid <span class="math display">\[ F_j \simeq \int_{E_j}^{E_{j+1}} F(E, \theta) \text{d}E \]</span></p></li>
+<li class="fragment"><p>The convolution with the instrument is reduced to a matrix multiplication <span class="math display">\[ \lambda_i \simeq \sum_j R_{i,j} \, A_j \, F_j \, \Delta T\]</span></p></li>
+<li class="fragment"><p>The counts in each channel follows a Poisson distribution <span class="math display">\[ C_i \sim \mathcal{P}\left\{ \lambda_i \right\} \]</span></p></li>
+</ul>
+</div>
 </section></section>
 <section>
 <section id="bayesian-inference-crash-course" class="title-slide slide level1 center">
