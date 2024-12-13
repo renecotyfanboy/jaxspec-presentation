@@ -236,28 +236,96 @@ A pure-Python machine learning library
 
 
 ::: {.column width="60%"}
+**NGC7793 ULX-4**
 
-::: {.fragment fragment-index=1}
-- Absorbed blackbody and powerlaw model
+- Two component model 
+- 5 parameters to fit
+- Sampling until convergence $\hat{R} < 1.01$
+- Computation on a single core 
+
+`jaxspec` with NUTS is an order of magnitude faster on CPU compared to others. 
+This can be increased by another $10\sim100$ factor when moving the computation to the GPU or the TPU.
 :::
 
-::: {.fragment fragment-index=2}
-- 5-parameters to fit
-:::
-
-::: {.fragment fragment-index=3}
-- EPIC pn spectrum of NGC7793 ULX-4
-:::
-
-::: {.fragment fragment-index=5}
-`jaxspec` with NUTS is an order of magnitude faster on CPU compared to others
-:::
-
-:::
-
-::: {.column width="40%" .fragment fragment-index=4}
+::: {.column width="40%"}
 ![](images/time_benchmark.png){width=100% fig-align="left"}
 :::
+
+# What is `SIXSA`?
+
+## Normalizing flows {.smaller}
+
+ Normalizing flows are invertible transformations beotween probability distributions, parametrized using neural networks.
+
+![](images/flow_transform_demo.png){width=100% fig-align="center"}
+
+## Simulation based inference (SBI) {.smaller}
+
+Simulation based inference uses normalizing flow to learn either $P(\theta | X)$ or $P(X | \theta )$, given a training set of random parameters $\{\theta\}_i$ and simulated observables $\{X\}_i$ using the same parameters.
+
+::: {.incremental}
+- Fast inference once the network is trained 
+- Fast training compared to most architectures 
+- Likelihood free approaches : use compressed representation
+- Straightforward to apply if the likelihood is known
+- Easy marginalisation with regard to nuisance parameters 
+:::
+
+## SIXSA {.smaller}
+
+SBI works for X-ray spectral fitting. This approach is **robust** when compared to traditional methodologies while being **orders of magnitude faster**
+
+::: {.column width="50%" .fragment}
+:::{.r-stack}
+Gaussian regime ($\gtrsim 10^4$ photons)
+:::
+
+![](images/high_counts_cropped.png){width=500px height=375px fig-align="center"}
+:::
+
+::: {.column width="50%" .fragment}
+:::{.r-stack}
+Poisson regime ($\lesssim 10^4$ photons)
+:::
+
+![](images/low_counts_cropped.png){width=500px height=375px fig-align="center"}
+:::
+
+## SIXSA on real data {.smaller}
+
+::: {.column width="40%"}
+**NGC7793 ULX-4**
+
+- Multiround inference
+- 5000 simulations/step
+
+`SIXSA` gives same results as `jaxspec` in comparable time. But it is much faster for high resolution spectrometry and/or *slow to compute* models.
+:::
+
+::: {.column width="60%"}
+![](images/jaxspec_vs_sixsa.png){width=90% fig-align="center"}
+:::
+
+See also [Barret & Dupourqué(2024)](https://ui.adsabs.harvard.edu/abs/2024arXiv240905757D/abstract) and upcoming Dupourqué & Barret (~2025).
+
+## SIXSA with compressed data
+- SBI can deal with compressed data (likelihood-free)
+- Compression with e.g. MLP, PCA or summary statistics 
+- Simple summary statistics works amazingly well
+
+Fitting a spectrum using simply $\sim 50$ statistics such as mean, std, harness ratios can be more efficient than using the whole information **even in the X-IFU case**.
+
+## 
+
+![](images/summary.png){width=100% fig-align="center"}
+
+# Take home message 
+
+We are actively working on new methods for X-ray spectral fitting, building up expertise in `JAX` and `sbi`. 
+
+These approaches offer dramatic speed-ups with little or no loss of accuracy, and can cope with harsh likelihood landscapes.
+
+We hope that such tools will be suitable for the next generation of X-ray spectrometers, and allow new analyses deep into the Poisson regime. 
 
 # How to use `jaxspec`
 
