@@ -672,7 +672,7 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 <img data-src="images/flow_transform_demo.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="simulation-based-inference-sbi" class="slide level2 smaller">
 <h2>Simulation based inference (SBI)</h2>
-<p>Simulation based inference uses normalizing flow to learn either <span class="math inline">\(P(\theta | X)\)</span> or <span class="math inline">\(P(X | \theta )\)</span>, given a training set of random parameters <span class="math inline">\(\{\theta\}_i\)</span> and simulated observables <span class="math inline">\(\{X\}_i\)</span> using the same parameters.</p>
+<p>Simulation-based inference uses normalizing flows to learn either <span class="math inline">\(P(\theta | X)\)</span> or <span class="math inline">\(P(X | \theta )\)</span>, given a training set of random parameters <span class="math inline">\(\{\theta\}_i\)</span> and simulated observables <span class="math inline">\(\{X\}_i\)</span> using these parameters.</p>
 <div>
 <ul>
 <li class="fragment">Fast inference once the network is trained</li>
@@ -680,6 +680,7 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 <li class="fragment">Likelihood free approaches : use compressed representation</li>
 <li class="fragment">Straightforward to apply if the likelihood is known</li>
 <li class="fragment">Easy marginalisation with regard to nuisance parameters</li>
+<li class="fragment">Two flavors of SBI with single round or multiple round inference</li>
 </ul>
 </div>
 </section>

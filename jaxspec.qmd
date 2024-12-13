@@ -256,13 +256,13 @@ This can be increased by another $10\sim100$ factor when moving the computation 
 
 ## Normalizing flows {.smaller}
 
- Normalizing flows are invertible transformations beotween probability distributions, parametrized using neural networks.
+ Normalizing flows are invertible transformations between probability distributions, parametrized using neural networks.
 
 ![](images/flow_transform_demo.png){width=100% fig-align="center"}
 
 ## Simulation based inference (SBI) {.smaller}
 
-Simulation based inference uses normalizing flow to learn either $P(\theta | X)$ or $P(X | \theta )$, given a training set of random parameters $\{\theta\}_i$ and simulated observables $\{X\}_i$ using the same parameters.
+Simulation-based inference uses normalizing flows to learn either $P(\theta | X)$ or $P(X | \theta )$, given a training set of random parameters $\{\theta\}_i$ and simulated observables $\{X\}_i$ using these parameters.
 
 ::: {.incremental}
 - Fast inference once the network is trained 
@@ -270,6 +270,7 @@ Simulation based inference uses normalizing flow to learn either $P(\theta | X)$
 - Likelihood free approaches : use compressed representation
 - Straightforward to apply if the likelihood is known
 - Easy marginalisation with regard to nuisance parameters 
+- Two flavors of SBI with single round or multiple round inference
 :::
 
 ## SIXSA {.smaller}
