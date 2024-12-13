@@ -8,7 +8,7 @@
 <link href="jaxspec_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="jaxspec_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="jaxspec_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.56">
+  <meta name="generator" content="quarto-1.5.57">
 
   <title>jaxspec</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -639,31 +639,103 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 <section id="performance-benchmark" class="slide level2 smaller">
 <h2>Performance benchmark</h2>
 <div class="column" style="width:60%;">
-<div class="fragment" data-fragment-index="1">
+<p><strong>NGC7793 ULX-4</strong></p>
 <ul>
-<li>Absorbed blackbody and powerlaw model</li>
+<li>Two component model</li>
+<li>5 parameters to fit</li>
+<li>Sampling until convergence <span class="math inline">\(\hat{R} &lt; 1.01\)</span></li>
+<li>Computation on a single core</li>
 </ul>
-</div>
-<div class="fragment" data-fragment-index="2">
-<ul>
-<li>5-parameters to fit</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="3">
-<ul>
-<li>EPIC pn spectrum of NGC7793 ULX-4</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="5">
-<p><code>jaxspec</code> with NUTS is an order of magnitude faster on CPU compared to others</p>
-</div>
-</div><div class="column fragment" data-fragment-index="4" style="width:40%;">
+<p><code>jaxspec</code> with NUTS is an order of magnitude faster on CPU compared to others. This can be increased by another <span class="math inline">\(10\sim100\)</span> factor when moving the computation to the GPU or the TPU.</p>
+</div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-left">
 <figure>
 <p><img data-src="images/time_benchmark.png" class="quarto-figure quarto-figure-left" style="width:100.0%"></p>
 </figure>
 </div>
 </div></section></section>
+<section>
+<section id="what-is-sixsa" class="title-slide slide level1 center">
+<h1>What is <code>SIXSA</code>?</h1>
+
+</section>
+<section id="normalizing-flows" class="slide level2 smaller">
+<h2>Normalizing flows</h2>
+<p>Normalizing flows are invertible transformations beotween probability distributions, parametrized using neural networks.</p>
+
+<img data-src="images/flow_transform_demo.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="simulation-based-inference-sbi" class="slide level2 smaller">
+<h2>Simulation based inference (SBI)</h2>
+<p>Simulation based inference uses normalizing flow to learn either <span class="math inline">\(P(\theta | X)\)</span> or <span class="math inline">\(P(X | \theta )\)</span>, given a training set of random parameters <span class="math inline">\(\{\theta\}_i\)</span> and simulated observables <span class="math inline">\(\{X\}_i\)</span> using the same parameters.</p>
+<div>
+<ul>
+<li class="fragment">Fast inference once the network is trained</li>
+<li class="fragment">Fast training compared to most architectures</li>
+<li class="fragment">Likelihood free approaches : use compressed representation</li>
+<li class="fragment">Straightforward to apply if the likelihood is known</li>
+<li class="fragment">Easy marginalisation with regard to nuisance parameters</li>
+</ul>
+</div>
+</section>
+<section id="sixsa" class="slide level2 smaller">
+<h2>SIXSA</h2>
+<p>SBI works for X-ray spectral fitting. This approach is <strong>robust</strong> when compared to traditional methodologies while being <strong>orders of magnitude faster</strong></p>
+<div class="column fragment" style="width:50%;">
+<div class="r-stack">
+<p>Gaussian regime (<span class="math inline">\(\gtrsim 10^4\)</span> photons)</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/high_counts_cropped.png" class="quarto-figure quarto-figure-center" width="500" height="375"></p>
+</figure>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="r-stack">
+<p>Poisson regime (<span class="math inline">\(\lesssim 10^4\)</span> photons)</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/low_counts_cropped.png" class="quarto-figure quarto-figure-center" width="500" height="375"></p>
+</figure>
+</div>
+</div></section>
+<section id="sixsa-on-real-data" class="slide level2 smaller">
+<h2>SIXSA on real data</h2>
+<div class="column" style="width:40%;">
+<p><strong>NGC7793 ULX-4</strong></p>
+<ul>
+<li>Multiround inference</li>
+<li>5000 simulations/step</li>
+</ul>
+<p><code>SIXSA</code> gives same results as <code>jaxspec</code> in comparable time. But it is much faster for high resolution spectrometry and/or <em>slow to compute</em> models.</p>
+</div><div class="column" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/jaxspec_vs_sixsa.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+</figure>
+</div>
+</div><p>See also <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240905757D/abstract">Barret &amp; Dupourqué(2024)</a> and upcoming Dupourqué &amp; Barret (~2025).</p>
+</section>
+<section id="sixsa-with-compressed-data" class="slide level2">
+<h2>SIXSA with compressed data</h2>
+<ul>
+<li>SBI can deal with compressed data (likelihood-free)</li>
+<li>Compression with e.g.&nbsp;MLP, PCA or summary statistics</li>
+<li>Simple summary statistics works amazingly well</li>
+</ul>
+<p>Fitting a spectrum using simply <span class="math inline">\(\sim 50\)</span> statistics such as mean, std, harness ratios can be more efficient than using the whole information <strong>even in the X-IFU case</strong>.</p>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+
+<img data-src="images/summary.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section></section>
+<section id="take-home-message" class="title-slide slide level1 center">
+<h1>Take home message</h1>
+<p>We are actively working on new methods for X-ray spectral fitting, building up expertise in <code>JAX</code> and <code>sbi</code>.</p>
+<p>These approaches offer dramatic speed-ups with little or no loss of accuracy, and can cope with harsh likelihood landscapes.</p>
+<p>We hope that such tools will be suitable for the next generation of X-ray spectrometers, and allow new analyses deep into the Poisson regime.</p>
+</section>
+
 <section>
 <section id="how-to-use-jaxspec" class="title-slide slide level1 center">
 <h1>How to use <code>jaxspec</code></h1>
@@ -682,7 +754,7 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 <section id="loading-data" class="slide level2">
 <h2>Loading data</h2>
 <p>We work on supporting existing convention, the OGIP standard, i.e.&nbsp;file such as <code>.pha</code>, <code>.arf</code> and <code>.rmf</code></p>
-<div id="5c0b83eb" class="cell" data-execution_count="2">
+<div id="5dcf9ba4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> jaxspec.data <span class="im">import</span> ObsConfiguration</span>
 <span id="cb2-2"><a href=""></a></span>
 <span id="cb2-3"><a href=""></a>obs <span class="op">=</span> ObsConfiguration.from_pha_file(</span>
