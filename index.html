@@ -10,7 +10,8 @@
 <link href="jaxspec_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <title>jaxspec</title>
+  <meta name="author" content="Dupourqué Simon &amp; Didier Barret">
+  <title>jaxspec &amp; SIXSA</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -393,10 +394,15 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title"><code>jaxspec</code></h1>
-  <p class="subtitle">A fast and robust Python library for X-ray spectral fitting</p>
+  <h1 class="title"><code>jaxspec</code> &amp; <code>SIXSA</code></h1>
+  <p class="subtitle">Fast and robust Python libraries for X-ray spectral fitting</p>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dupourqué Simon &amp; Didier Barret 
+</div>
+</div>
 </div>
 
 </section>
@@ -729,13 +735,17 @@ P(\theta | X) = \frac{  P(X | \theta) P(\theta)}{P(X)}
 <h2></h2>
 
 <img data-src="images/summary.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section></section>
+<section>
 <section id="take-home-message" class="title-slide slide level1 center">
 <h1>Take home message</h1>
 <p>We are actively working on new methods for X-ray spectral fitting, building up expertise in <code>JAX</code> and <code>sbi</code>.</p>
 <p>These approaches offer dramatic speed-ups with little or no loss of accuracy, and can cope with harsh likelihood landscapes.</p>
 <p>We hope that such tools will be suitable for the next generation of X-ray spectrometers, and allow new analyses deep into the Poisson regime.</p>
 </section>
+<section id="section-2" class="slide level2">
+<h2></h2>
 
+<img data-src="images/nasa_ads.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section></section>
 <section>
 <section id="how-to-use-jaxspec" class="title-slide slide level1 center">
 <h1>How to use <code>jaxspec</code></h1>
